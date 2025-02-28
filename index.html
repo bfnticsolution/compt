@@ -3,50 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion de Portefeuille</title>
-    <!-- Lien vers FontAwesome pour les icônes -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>PCode WARI</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
+            background-color: #1436a5;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
         }
 
-        .container {
-            width: 400px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-
-        input, select, button {
+        .form_main {
             width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            padding: 40px;
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            margin: auto;
+            border-radius: 20px;
         }
 
-        button {
-            background-color: #28a745;
+        .form_main::before {
+            position: absolute;
+            content: "";
+            width: 200px;
+            height: 200px;
+            background-color: #aa710e;
+            transform: rotate(45deg);
+            left: -180px;
+            bottom: 30px;
+            z-index: 2;
+            border-radius: 30px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.082);
+        }
+
+        .heading {
+            font-size: 2em;
+            color: #2fc411;
+            font-weight: 700;
+            margin: 5px 0 20px 0;
+            z-index: 2;
+        }
+
+        .inputContainer {
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .inputIcon {
+            position: absolute;
+            left: 10px;
+            color: #278a1e;
+            z-index: 3;
+        }
+
+        .inputField {
+            width: 100%;
+            height: 40px;
+            background-color: transparent;
+            border: none;
+            border-bottom: 2px solid #6b7280;
+            margin: 15px 0;
+            color: #1e308a;
+            font-size: 1em;
+            font-weight: 500;
+            box-sizing: border-box;
+            padding-left: 35px;
+            border-radius: 10px;
+        }
+
+        .inputField:focus {
+            outline: none;
+            border-bottom: 2px solid #3b82f6;
+        }
+
+        .inputField::placeholder {
+            color: #1144aa;
+            font-size: 1em;
+            font-weight: 500;
+        }
+
+        #button {
+            z-index: 2;
+            position: relative;
+            width: 50%;
+            border: none;
+            background-color: #1e8a20;
+            height: 40px;
             color: white;
+            font-size: 1em;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin: 20px 0;
             cursor: pointer;
+            transition: background-color 0.3s;
+            border-radius: 10px;
         }
 
-        button:hover {
-            background-color: #218838;
+        #button:hover {
+            background-color: #2563eb;
+        }
+
+        .forgotLink {
+            z-index: 2;
+            font-size: 0.9em;
+            font-weight: 500;
+            color: #1e3a8a;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+
+        .brand-logo {
+            width: 80px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            z-index: 2;
+        }
+
+        .logo-outside {
+            position: absolute;
+            top: -10px;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: auto;
+            border-radius: 10px;
+            z-index: 1000;
         }
 
         .hidden {
@@ -77,7 +175,6 @@
             margin-top: 5px;
         }
 
-        /* Styles pour les modals */
         .modal {
             display: none;
             position: fixed;
@@ -159,60 +256,207 @@
         .user-info strong {
             color: #28a745;
         }
+        /* Style pour la section d'opérations */
+#operationForm {
+    background-color: #7bd2596d; /* Couleur de fond douce */
+    padding: 20px; /* Espacement interne */
+    border-radius: 10px; /* Coins arrondis */
+    border: 20px;
+    border-color: #2fc411;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Ombre légère */
+    width: 320px;
+}
 
-        #profile-image {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 5px;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
-        }
+/* Style pour les labels dans le formulaire d'opérations */
+#operationForm label {
+    font-weight: bold; /* Texte en gras */
+    margin-top: 10px; /* Espacement supérieur */
+}
+
+/* Style pour le bouton de validation dans le formulaire d'opération */
+#operationForm #button {
+    background-color: #1e8a20; /* Couleur de fond pour le bouton */
+    border-radius: 10px; /* Coins arrondis */
+}
+
+#operationForm #button:hover {
+    background-color: #2563eb; /* Couleur au survol */
+}
+
+/* Style pour les sélecteurs */
+#operationForm select {
+    width: 100%; /* Largeur complète */
+    padding: 10px; /* Espacement interne */
+    border-radius: 5px; /* Coins arrondis */
+    border: 1px solid #ccc; /* Bordure douce */
+}
+
+/* Style pour les champs d'entrée */
+#operationForm input {
+    border-radius: 5px; /* Coins arrondis */
+    border: 1px solid #ccc; /* Bordure douce */
+}
+/* Style pour la carte combinée */
+.user-info-balance {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style pour l'icône d'affichage/masquage du solde */
+#balanceAmount {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#toggleBalanceIcon {
+    cursor: pointer;
+    margin-left: 10px;
+    color: #28a745;
+}
+
+#toggleBalanceIcon:hover {
+    color: #218838;
+}
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Section Connexion -->
-        <div id="auth-section">
-            <center>
-                <img id="profile-image" src="https://www2.0zz0.com/2025/02/24/15/368788634.jpg" alt="Photo de profil">
-                <h2>Connexion</h2>
-                <input type="tel" id="login-phone" placeholder="Numéro de téléphone" required>
-                <input type="password" id="login-password" placeholder="Mot de passe" required>
-                <button onclick="loginUser()">Se connecter</button>
-                <p><a href="#" onclick="showForgotPasswordModal()">Mot de passe oublié ?</a></p>
-            </center>
-        </div>
+<!-- Section Connexion -->
+<div id="login-section" class="form_main">
+    <p class="heading">Connexion</p>
 
-        <!-- Section Gestion de Compte (cachée par défaut) -->
-        <div id="account-section" class="hidden">
-            <h2>Mon Compte</h2>
-            <div class="user-info">
-                <p><strong>Nom :</strong> <span id="userName"></span></p>
-                <p><strong>Téléphone :</strong> <span id="userPhone"></span></p>
-            </div>
-            <div class="balance">
-                <h3>Solde Actuel</h3>
-                <p id="balanceAmount">0 XOF</p>
-            </div>
-            <form id="operationForm">
-                <label for="operationType">Type d'opération:</label>
-                <select id="operationType" name="operationType" required>
-                    <option value="depot">Sélectionnez une Opération</option>
-                    <option value="retrait">Retrait</option>
-                    <option value="transfert-national">Transfert WARI</option>
-                    <option value="internet">Forfait Internet</option>
-                    <option value="credit">Crédit d'Appel</option>
-                    <option value="transfert-international">Transfert International</option>
-                </select>
-                <div id="dynamicFields"></div>
-                <div id="feesInfo" class="fees hidden"></div>
-                <button type="submit">Valider</button>
-            </form>
-            <button onclick="showHistoryModal()">Historique des opérations</button>
+    <!-- Champ numéro de téléphone -->
+    <div class="inputContainer mb-3">
+        <i class="fas fa-phone inputIcon"></i>
+        <input type="tel" class="inputField form-control" id="login-phone" placeholder="Numéro de téléphone" required>
+    </div>
+
+    <!-- Champ mot de passe -->
+    <div class="inputContainer mb-3">
+        <i class="fas fa-lock inputIcon"></i>
+        <input type="password" class="inputField form-control" id="login-password" placeholder="Mot de passe" required>
+    </div>
+
+    <!-- Bouton de connexion -->
+    <button type="button" class="btn btn-primary w-100" id="button" onclick="loginUser()">Se connecter</button>
+
+    <!-- Liens supplémentaires -->
+    <p class="mt-3">
+        <a href="#" class="forgotLink" onclick="showSignupForm()">S'inscrire</a>
+        <a href="#" class="forgotLink" onclick="showForgotPasswordForm()">Mot de passe oublié ?</a>
+    </p>
+</div>
+
+<!-- Section Inscription -->
+<div id="signup-section" class="form_main hidden">
+    <p class="heading">Inscription</p>
+
+    <!-- Champ nom -->
+    <div class="inputContainer mb-3">
+        <i class="fas fa-user inputIcon"></i>
+        <input type="text" class="inputField form-control" id="signup-firstName" placeholder="Nom" required>
+    </div>
+
+    
+    <!-- Champ pays -->
+    <div class="inputContainer mb-3">
+        <i class="fas fa-globe inputIcon"></i>
+        <input type="text" class="inputField form-control" id="signup-country" placeholder="Pays" required>
+    </div>
+
+    <!-- Champ numéro de téléphone -->
+    <div class="inputContainer mb-3">
+        <i class="fas fa-phone inputIcon"></i>
+        <input type="tel" class="inputField form-control" id="signup-phone" placeholder="Numéro de téléphone" required>
+    </div>
+
+    <!-- Champ code secret -->
+    <div class="inputContainer mb-3">
+        <i class="fas fa-lock inputIcon"></i>
+        <input type="password" class="inputField form-control" id="signup-secretCode" placeholder="Code secret" required>
+    </div>
+
+    <!-- Bouton d'inscription -->
+    <button type="button" class="btn btn-primary w-100" id="button" onclick="signupUser()">S'inscrire</button>
+
+    <!-- Lien retour -->
+    <p class="mt-3">
+        <a href="#" class="forgotLink" onclick="showLoginForm()">Retour à la connexion</a>
+    </p>
+</div>
+
+ <!-- Section Gestion de Compte -->
+<div id="account-section" class="form_main hidden">
+    <p class="heading">Mon Compte</p>
+
+    <!-- Carte combinée pour les informations de l'utilisateur et le solde -->
+    <div class="user-info-balance">
+        <div class="user-info">
+            <p><strong>Nom :</strong> <span id="account-name"></span></p>
+            <p><strong>Téléphone :</strong> <span id="account-phone"></span></p>
+        </div>
+        
+    <!-- Bouton S'identifier -->
+    <button type="button" class="btn btn-primary w-100" id="button" onclick="showIdentificationForm()">S'identifier</button>
+
+        <div class="balance">
+            <h3>Solde</h3>
+            <p id="balanceAmount">
+                <span id="balanceText">******* F</span>
+                <i class="fas fa-eye" id="toggleBalanceIcon" onclick="toggleBalanceVisibility()"></i>
+            </p>
         </div>
     </div>
+
+    <!-- Formulaire pour les opérations -->
+    <form id="operationForm">
+        <label for="operationType">Type d'opération:</label>
+        <div class="form-group">
+      
+            <select id="operationType" name="operationType" required>
+                <option value="depot">Dépôt</option>
+                <option value="transfert-national">Transfert National</option>
+                <option value="retrait">Retrait</option>
+            </select>
+        </div>
+
+        <!-- Champs dynamiques -->
+        <div id="dynamicFields"></div>
+
+        <!-- Affichage des frais de transfert -->
+        <div id="feesInfo" class="fees hidden"></div>
+
+        <!-- Bouton de validation -->
+        <button type="submit" id="button">Valider</button>
+    </form>
+
+    <!-- Bouton pour afficher l'historique -->
+    <button type="button" class="btn btn-primary w-100" id="button" onclick="showHistoryModal()">Historique des opérations</button>
+
+    <!-- Bouton de déconnexion -->
+    <button type="button" class="btn btn-secondary w-100" id="button" onclick="logoutUser()">Déconnexion</button>
+</div>
+<!-- Section Identification -->
+<div id="identification-section" class="form_main hidden">
+    <p class="heading">Identification</p>
+
+    <!-- Champ recto de la pièce d'identité --> 
+    <div class="inputContainer mb-3">
+        <i class="fas fa-id-card inputIcon"></i>
+        <input type="file" class="inputField form-control" id="id-front" accept="image/*" required>
+    </div>
+    <!-- Bouton de soumission -->
+    <button type="button" class="btn btn-primary w-100" id="button" onclick="submitIdentification()">Soumettre</button>
+
+    <!-- Lien retour -->
+    <p class="mt-3">
+        <a href="#" class="forgotLink" onclick="showAccountSection()">Retour à la gestion de compte</a>
+    </p>
+</div>
 
 <!-- Modal pour afficher les messages -->
 <div id="modal" class="modal">
@@ -226,7 +470,7 @@
 <!-- Modal pour la validation par code PIN -->
 <div id="pinModal" class="modal">
     <div class="modal-content">
-        <h3>Entrez le code PIN</h3>
+        <h3>Validation par code PIN</h3>
         <input type="password" id="pinInput" placeholder="Entrez votre code PIN" required>
         <button class="modal-button" onclick="validatePin()">Valider</button>
         <button class="modal-button" onclick="closePinModal()">Annuler</button>
@@ -263,14 +507,13 @@
         <button class="modal-button" onclick="closeForgotPasswordModal()">Annuler</button>
     </div>
 </div>
-
 <script>
     let currentUser = null;
     let pendingOperation = null; // Stocke l'opération en attente de validation par PIN
     let operationsHistory = []; // Historique des opérations
 
     // URL de l'API Google Apps Script
-    const apiUrl = 'https://script.google.com/macros/s/AKfycby6VJVCQlTsbttNjg2OpysRycx1CC2ZpobhzHjNKrKJZeAhBPsjwkbthstea7ItDwFeSQ/exec';
+    const apiUrl = 'https://script.google.com/macros/s/AKfycbyxOiOzBfiriVcIWqseShpELpdKHHWfQPI9BrHZo3Ozd4_3XMmqrjWQik7c031_BWY0aw/exec';
 
     // Fonction pour afficher une modal
     function showModal(iconClass, message) {
@@ -391,9 +634,6 @@
         })
         .then(response => {
             console.log("Réponse reçue du serveur :", response);
-            if (!response.ok) {
-                throw new Error('Erreur réseau');
-            }
             return response.json();
         })
         .then(data => {
@@ -413,6 +653,12 @@
         });
     }
 
+    // Fonction pour envoyer une notification
+    function sendNotification(operationType, amount, recipientPhone) {
+        const message = `Opération réussie : ${operationType} de ${amount} XOF vers ${recipientPhone || 'N/A'}`;
+        console.log(`Notification envoyée : ${message}`);
+    }
+
     // Fonction de connexion
     function loginUser() {
         const phone = document.getElementById('login-phone').value;
@@ -424,7 +670,7 @@
                 .then(data => {
                     if (data.status === 'success') {
                         currentUser = data.user;
-                        document.getElementById('auth-section').classList.add('hidden');
+                        document.getElementById('login-section').classList.add('hidden');
                         document.getElementById('account-section').classList.remove('hidden');
                         updateUserInfo(currentUser); // Mettre à jour les informations de l'utilisateur
                         fetchHistory(); // Charger l'historique
@@ -441,13 +687,14 @@
 
     // Mettre à jour le solde affiché
     function updateBalance() {
-        document.getElementById('balanceAmount').textContent = `${currentUser.balance.toFixed(2)} XOF`;
+        document.getElementById('balanceAmount').textContent = `${currentUser.balance.toFixed(2)} F`;
     }
 
+    // Mettre à jour les informations de l'utilisateur
     function updateUserInfo(user) {
-        document.getElementById('userName').textContent = user.name; // Afficher le nom
-        document.getElementById('userPhone').textContent = user.phone; // Afficher le numéro de téléphone
-        document.getElementById('balanceAmount').textContent = `${user.balance.toFixed(2)} XOF`; // Afficher le solde
+        document.getElementById('account-name').textContent = user.name; // Afficher le nom
+        document.getElementById('account-phone').textContent = user.phone; // Afficher le numéro de téléphone
+        document.getElementById('balanceText').textContent = '******* F'; // Masquer le solde par défaut
     }
 
     // Charger l'historique des opérations
@@ -470,6 +717,8 @@
         const feesInfo = document.getElementById('feesInfo');
         let fieldsHTML = '';
 
+        console.log("Type d'opération sélectionné :", operationType); // Log du type d'opération
+
         if (operationType === 'depot') {
             fieldsHTML = `
                 <label for="amount">Montant (XOF):</label>
@@ -482,28 +731,9 @@
                 <input type="tel" id="recipientPhone" name="recipientPhone" required minlength="8">
 
                 <label for="amount">Montant (XOF):</label>
-                <input type="number" id="amount" name="amount" required min="100" max="1000000">
+                <input type="number" id="amount" name="amount" required min="500" max="500000">
             `;
             feesInfo.textContent = "Frais de transfert : 0%";
-            feesInfo.classList.remove('hidden');
-        } else if (operationType === 'transfert-international') {
-            fieldsHTML = `
-                <label for="recipientPhone">Numéro du bénéficiaire:</label>
-                <input type="tel" id="recipientPhone" name="recipientPhone" required minlength="8">
-
-                <label for="amount">Montant (XOF):</label>
-                <input type="number" id="amount" name="amount" required min="5000" max="1000000">
-
-                <label for="country">Pays de destination:</label>
-                <select id="country" name="country" required>
-                    <option value="France">France</option>
-                    <option value="États-Unis">États-Unis</option>
-                    <option value="Royaume-Uni">Royaume-Uni</option>
-                    <option value="Burkina Faso">Burkina Faso</option>
-                    <option value="Sénégal">Sénégal</option>
-                </select>
-            `;
-            feesInfo.textContent = "Frais de transfert : +2% ";
             feesInfo.classList.remove('hidden');
         } else if (operationType === 'retrait') {
             fieldsHTML = `
@@ -511,10 +741,9 @@
                 <select id="service" name="service" required>
                     <option value="Orange Money">Orange Money</option>
                     <option value="Moov Money">Moov Money</option>
-                    <option value="Telecel Money">Telecel Money</option>
                     <option value="Wave">Wave</option>
                     <option value="Sank">Sank</option>
-                    <option value="Coris Money">Coris Money</option>
+                    <option value="MTN">MTN</option>
                     <option value="Flooz">Flooz</option>
                 </select>
 
@@ -535,28 +764,6 @@
             `;
             feesInfo.textContent = "Frais de retrait : 2% (hors XOF)";
             feesInfo.classList.remove('hidden');
-        } else if (operationType === 'internet') {
-            fieldsHTML = `
-                <label for="recipientPhone">Numéro du destinataire:</label>
-                <input type="tel" id="recipientPhone" name="recipientPhone" required minlength="8">
-
-                <label for="package">Forfait:</label>
-                <select id="package" name="package">
-                    <option value="1GB">1GB - 1000 XOF</option>
-                    <option value="3GB">3GB - 3000 XOF</option>
-                    <option value="5GB">5GB - 5000 XOF</option>
-                </select>
-            `;
-            feesInfo.classList.add('hidden');
-        } else if (operationType === 'credit') {
-            fieldsHTML = `
-                <label for="recipientPhone">Numéro du destinataire:</label>
-                <input type="tel" id="recipientPhone" name="recipientPhone" required minlength="8">
-
-                <label for="amount">Montant (XOF):</label>
-                <input type="number" id="amount" name="amount" required min="500" max="500000">
-            `;
-            feesInfo.classList.add('hidden');
         }
 
         dynamicFields.innerHTML = fieldsHTML;
@@ -577,29 +784,116 @@
             return;
         }
 
-        // Vérification du numéro de destinataire pour les transferts
-        if (operationType.includes('transfert')) {
-            fetch(apiUrl + `?action=checkUser&phone=${recipientPhone}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        // Stocker l'opération en attente
-                        pendingOperation = { operationType, amount, recipientPhone, country, service };
-                        // Afficher la modal de code PIN
-                        showPinModal();
-                    } else {
-                        showModal('error', 'Le numéro de téléphone du destinataire n\'existe pas.');
-                    }
-                })
-                .catch(() => showModal('error', 'Erreur lors de la vérification du numéro de téléphone.'));
-        } else {
-            // Stocker l'opération en attente
-            pendingOperation = { operationType, amount, recipientPhone, country, service };
-            // Afficher la modal de code PIN
-            showPinModal();
-        }
-    });
-</script>
+        // Stocker l'opération en attente
+        pendingOperation = { operationType, amount, recipientPhone, country, service };
 
+        // Afficher la modal de code PIN
+        showPinModal();
+    });
+
+    // Fonctions pour afficher les sections
+    function showLoginForm() {
+        document.getElementById('login-section').classList.remove('hidden');
+        document.getElementById('signup-section').classList.add('hidden');
+        document.getElementById('account-section').classList.add('hidden');
+        document.getElementById('identification-section').classList.add('hidden');
+    }
+
+    function showSignupForm() {
+        document.getElementById('login-section').classList.add('hidden');
+        document.getElementById('signup-section').classList.remove('hidden');
+        document.getElementById('account-section').classList.add('hidden');
+        document.getElementById('identification-section').classList.add('hidden');
+    }
+
+    function showAccountSection() {
+        document.getElementById('login-section').classList.add('hidden');
+        document.getElementById('signup-section').classList.add('hidden');
+        document.getElementById('account-section').classList.remove('hidden');
+        document.getElementById('identification-section').classList.add('hidden');
+    }
+
+    function showIdentificationForm() {
+        document.getElementById('login-section').classList.add('hidden');
+        document.getElementById('signup-section').classList.add('hidden');
+        document.getElementById('account-section').classList.add('hidden');
+        document.getElementById('identification-section').classList.remove('hidden');
+    }
+
+    // Fonction d'inscription
+    // Exemple pour l'inscription
+function signupUser() {
+    const firstName = document.getElementById('signup-firstName').value;
+    const country = document.getElementById('signup-country').value;
+    const phone = document.getElementById('signup-phone').value;
+    const secretCode = document.getElementById('signup-secretCode').value;
+
+    if (firstName && country && phone && secretCode) {
+        console.log("Données d'inscription :", {
+            action: 'signup',
+            firstName: firstName,
+            country: country,
+            phone: phone,
+            secretCode: secretCode
+        });
+
+        fetch(apiUrl, {
+            method: 'POST',
+            body: JSON.stringify({
+                action: 'signup',
+                firstName: firstName,
+                country: country,
+                phone: phone,
+                secretCode: secretCode
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            console.log("Réponse d'inscription :", response);
+            return response.json();
+        })
+        .then(data => {
+            console.log("Données reçues :", data);
+            if (data.status === 'success') {
+                showModal('success', 'Inscription réussie !');
+                showLoginForm();
+            } else {
+                showModal('error', data.message || 'Erreur lors de l\'inscription.');
+            }
+        })
+        .catch(error => {
+            console.error("Erreur lors de l'inscription :", error);
+            showModal('error', 'Erreur de connexion. Vérifiez votre réseau.');
+        });
+    } else {
+        showModal('error', 'Veuillez remplir tous les champs.');
+    }
+}
+
+
+    // Fonction de déconnexion
+    function logoutUser() {
+        currentUser = null;
+        showLoginForm();
+    }
+
+    // Fonction pour masquer/afficher le solde
+    function toggleBalanceVisibility() {
+        const balanceText = document.getElementById('balanceText');
+        const toggleBalanceIcon = document.getElementById('toggleBalanceIcon');
+
+        if (balanceText.textContent === '******* F') {
+            balanceText.textContent = `${currentUser.balance.toFixed(2)} XOF`;
+            toggleBalanceIcon.classList.remove('fa-eye');
+            toggleBalanceIcon.classList.add('fa-eye-slash');
+        } else {
+            balanceText.textContent = '******* F';
+            toggleBalanceIcon.classList.remove('fa-eye-slash');
+            toggleBalanceIcon.classList.add('fa-eye');
+        }
+    }
+</script>
 </body>
 </html>
